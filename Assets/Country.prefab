@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6971557199194133809
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5511152444286765357}
+  - component: {fileID: 9155644550702666232}
+  m_Layer: 0
+  m_Name: Country
+  m_TagString: Country
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5511152444286765357
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6971557199194133809}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.247368, y: 0.024417814, z: 0.97068214}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9155644550702666232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6971557199194133809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10379dc33b6abbe4aaa33a0a35b0ffa6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Money: 1000
+  tax: 0
+  corruption: 0
+  GovernMentCycle: 0
+  TownHall: {fileID: 0}
+  President: {fileID: 0}
+  people: []
+  army_people: []
+  Houses: []
+  LeftWing: 0
+  RightWing: 0
+  PreviousMinister: {fileID: 0}
+  TownHallPrefab: {fileID: 5989147023366316339, guid: ce4818650e0a7af45b39a4270f813364, type: 3}
+  HumanPrefab: {fileID: 5056582239252005092, guid: 3ab7103178f0d3646ad1d62fd83bd9ba, type: 3}
+  HousePrefab: {fileID: 3711385010080266455, guid: 82e90d123192c6a43a2bc5c8e9ae0836, type: 3}
+  FactoryPrefab: {fileID: 3711385010080266455, guid: 5778e726a810043478b84eeb17c5fb92, type: 3}
