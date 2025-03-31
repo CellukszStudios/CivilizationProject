@@ -141,14 +141,8 @@ public class HumanAI : MonoBehaviour
     {
         if (properties.Count <= 0) return;
         int randIndex = UnityEngine.Random.Range(0, properties.Count-1);
-        try
-        {
-            if (agent)
-                agent.SetDestination(properties[randIndex].transform.position);
-        }catch (Exception err)
-        {
-
-        }
+        if (agent)
+            agent.SetDestination(properties[randIndex].transform.position);
     }
 
     private void GetPaymet()
