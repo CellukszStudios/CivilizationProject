@@ -77,6 +77,8 @@ public class CountryAI : MonoBehaviour
                 if (people[i] && RichMan)
                     if (people[i].GetComponent<HumanAI>().Money > RichMan.GetComponent<HumanAI>().Money) RichMan = people[i];
                 RichestMan = RichMan;
+
+                if (RichestMan) return;
                 RichestManMoney = RichestMan.GetComponent<HumanAI>().Money;
                 RichestManProperties = RichestMan.GetComponent<HumanAI>().properties.Count;
             }

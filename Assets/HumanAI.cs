@@ -100,16 +100,15 @@ public class HumanAI : MonoBehaviour
         if (Money > 500)
         {
             CountryAI cAI = Country.GetComponent<CountryAI>();
-            if (cAI.Houses.Count > 0)
+            if (cAI.Houses.Count < 0) return;
+
+            GameObject house = cAI.Houses[UnityEngine.Random.Range(0, cAI.Houses.Count - 1)];
+            if (house && house.GetComponent<HouseObject>().owner == null)
             {
-                GameObject house = cAI.Houses[UnityEngine.Random.Range(0, cAI.Houses.Count - 1)];
-                if (house && house.GetComponent<HouseObject>().owner == null)
-                {
-                    properties.Add(house);
-                    house.GetComponent<HouseObject>().owner = gameObject;
-                    isHajlektalan = false;
-                    Money -= 500;
-                }
+                properties.Add(house);
+                house.GetComponent<HouseObject>().owner = gameObject;
+                isHajlektalan = false;
+                Money -= 500;
             }
         }
     }
@@ -140,7 +139,7 @@ public class HumanAI : MonoBehaviour
     private void GoHome()
     {
         if (properties.Count <= 0) return;
-        int randIndex = UnityEngine.Random.Range(0, properties.Count-1);
+        int randIndex = UnityEngine.Random.Range(0, properties.Count);
         if (agent)
             agent.SetDestination(properties[randIndex].transform.position);
     }
@@ -172,16 +171,22 @@ public class HumanAI : MonoBehaviour
     {
         CountryAI cAI = Country.GetComponent<CountryAI>();
         GameObject child = Instantiate(HumanPrefab,transform.position,Quaternion.identity);
-        child.GetComponent<HumanAI>().name = "";
+        HumanAI cHumanAI = child.GetComponent<HumanAI>();
+
+        cHumanAI.name = "";
         child.name = "";
+
         string[] splitted_name = name.Split(' ');
-        child.GetComponent<HumanAI>().name = splitted_name[0] + " " + RandName();
+
+        cHumanAI.name = splitted_name[0] + " " + RandName();
         child.name = "";
-        child.name = child.GetComponent<HumanAI>().name;
-        child.GetComponent<HumanAI>().WorkPlace = null;
-        child.GetComponent<HumanAI>().properties.Clear();
-        child.GetComponent<HumanAI>().Money = 400;
+        child.name = cHumanAI.name;
+        cHumanAI.WorkPlace = null;
+        cHumanAI.properties.Clear();
+        cHumanAI.Money = 400;
+
         Money = Money/2;
+
         cAI.people.Add(child);
         Children = child;
     }
