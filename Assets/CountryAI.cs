@@ -53,6 +53,7 @@ public class CountryAI : MonoBehaviour
         country_list = Clist.GetComponent<CountryList>();
 
         if (!TownHall) TownHall = Build(1000, TownHallPrefab);
+
         SettleCountry();
         StartCoroutine(StartCor());
     }
@@ -68,24 +69,19 @@ public class CountryAI : MonoBehaviour
     private void SetRichestMan()
     {
         if (people.Count <= 0) return;
+
         GameObject RichMan = people[0];
 
         for (int i = 0; i < people.Count-1; i++)
         {
-            try
-            {
-                if (people[i] && RichMan)
-                    if (people[i].GetComponent<HumanAI>().Money > RichMan.GetComponent<HumanAI>().Money) RichMan = people[i];
-                RichestMan = RichMan;
+            if (people[i] && RichMan)
+                if (people[i].GetComponent<HumanAI>().Money > RichMan.GetComponent<HumanAI>().Money) RichMan = people[i];
+            RichestMan = RichMan;
 
-                if (RichestMan) return;
-                RichestManMoney = RichestMan.GetComponent<HumanAI>().Money;
-                RichestManProperties = RichestMan.GetComponent<HumanAI>().properties.Count;
-            }
-            catch (Exception ex)
-            {
-                Debug.LogException(ex);
-            }
+            if (!RichestMan) return;
+
+            RichestManMoney = RichestMan.GetComponent<HumanAI>().Money;
+            RichestManProperties = RichestMan.GetComponent<HumanAI>().properties.Count;
         }
     }
 
@@ -154,22 +150,18 @@ public class CountryAI : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                try
+                GameObject human = people[UnityEngine.Random.Range(0, people.Count - 1)];
+                if (human)
                 {
-                    GameObject human = people[UnityEngine.Random.Range(0, people.Count - 1)];
-                    if (human)
-                    {
-                        if (politicans.Contains(human)) return;
-                        politicans.Add(human);
-                    }
+                    if (politicans.Contains(human)) return;
+                    politicans.Add(human);
                 }
-                catch (Exception e)
-                {
-
-                }
+  
             }
         }
+
         if (politicans.Count <= 1) return;
+
         President = politicans[UnityEngine.Random.Range(0, politicans.Count)];
         if (!President)
         {
@@ -179,10 +171,12 @@ public class CountryAI : MonoBehaviour
                 FormGovernment();
             }
         }
+
         if (PreviousMinister)
             PreviousMinister.GetComponent<HumanAI>().WorkPlace = null;
 
         if (!President) return;
+
         if (President && President == PreviousMinister) FormGovernment();
         PreviousMinister = President;
         if (President)

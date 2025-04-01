@@ -100,9 +100,9 @@ public class HumanAI : MonoBehaviour
         if (Money > 500)
         {
             CountryAI cAI = Country.GetComponent<CountryAI>();
-            if (cAI.Houses.Count < 0) return;
+            if (cAI.Houses.Count <= 0) return;
 
-            GameObject house = cAI.Houses[UnityEngine.Random.Range(0, cAI.Houses.Count - 1)];
+            GameObject house = cAI.Houses[UnityEngine.Random.Range(0, cAI.Houses.Count)];
             if (house && house.GetComponent<HouseObject>().owner == null)
             {
                 properties.Add(house);
@@ -116,7 +116,9 @@ public class HumanAI : MonoBehaviour
     private void GetWork()
     {
         CountryAI cAI = Country.GetComponent<CountryAI>();
+
         if (cAI.Factories.Count <= 0) return;
+
         foreach (GameObject factory in cAI.Factories) 
         { 
             FactoryObject fObj = factory.GetComponent<FactoryObject>();
@@ -133,7 +135,8 @@ public class HumanAI : MonoBehaviour
     {
         if (!WorkPlace) return;
 
-        agent.SetDestination(WorkPlace.transform.position);
+        if (agent)
+            agent.SetDestination(WorkPlace.transform.position);
     }
 
     private void GoHome()
@@ -147,6 +150,7 @@ public class HumanAI : MonoBehaviour
     private void GetPaymet()
     {
         if (!WorkPlace) return;
+
         CountryAI cAI = Country.GetComponent<CountryAI>();
         Money += 10*((100-cAI.tax)/100);
     }
@@ -156,9 +160,7 @@ public class HumanAI : MonoBehaviour
         CountryAI cAI = Country.GetComponent<CountryAI>();
 
         if (Money > 3500 && cAI.politicans.Count < cAI.MaxPoliticans && !cAI.politicans.Contains(gameObject))
-        {
             cAI.politicans.Add(gameObject);
-        }
     }
 
     private void Expenses()
@@ -200,16 +202,17 @@ public class HumanAI : MonoBehaviour
     IEnumerator Reproduction()
     {
         yield return new WaitForSeconds(500);
+
         if (Money > 50 && WorkPlace && !Children)
-        {
             ReProduce();
-        } 
+
         StartCoroutine(Reproduction());
     }
 
     IEnumerator eat()
     {
         yield return new WaitForSeconds(50);
+
         if (Money >= 2)
         {
             Money -= 2;
@@ -218,6 +221,7 @@ public class HumanAI : MonoBehaviour
             country_list.worldDeaths++;
             Destroy(gameObject);
         }
+
         StartCoroutine(eat());
     }
 
