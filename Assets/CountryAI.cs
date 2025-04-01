@@ -150,7 +150,7 @@ public class CountryAI : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                GameObject human = people[UnityEngine.Random.Range(0, people.Count - 1)];
+                GameObject human = people[UnityEngine.Random.Range(0, people.Count)];
                 if (human)
                 {
                     if (politicans.Contains(human)) return;
