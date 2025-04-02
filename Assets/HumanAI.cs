@@ -219,6 +219,7 @@ public class HumanAI : MonoBehaviour
         }else
         {
             country_list.worldDeaths++;
+            country_list.names.Add(name);
             Destroy(gameObject);
         }
 
