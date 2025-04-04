@@ -135,7 +135,7 @@ public class HumanAI : MonoBehaviour
     {
         if (!WorkPlace) return;
 
-        if (agent)
+        if (agent && agent.isOnNavMesh)
             agent.SetDestination(WorkPlace.transform.position);
     }
 
@@ -143,7 +143,7 @@ public class HumanAI : MonoBehaviour
     {
         if (properties.Count <= 0) return;
         int randIndex = UnityEngine.Random.Range(0, properties.Count);
-        if (agent)
+        if (agent && agent.isOnNavMesh)
             agent.SetDestination(properties[randIndex].transform.position);
     }
 
@@ -193,6 +193,15 @@ public class HumanAI : MonoBehaviour
         Children = child;
     }
 
+    private void Dead()
+    {
+        country_list.worldDeaths++;
+        country_list.names.Add(name);
+        agent.isStopped = true;
+        Destroy(agent);
+        Destroy(gameObject);
+    }
+
     IEnumerator Death()
     {
         yield return new WaitForSeconds(6000);
@@ -218,9 +227,7 @@ public class HumanAI : MonoBehaviour
             Money -= 2;
         }else
         {
-            country_list.worldDeaths++;
-            country_list.names.Add(name);
-            Destroy(gameObject);
+            Dead();
         }
 
         StartCoroutine(eat());

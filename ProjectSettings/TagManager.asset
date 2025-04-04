@@ -8,6 +8,8 @@ TagManager:
   - King
   - Country
   - list
+  - tile
+  - Grid
   layers:
   - Default
   - TransparentFX

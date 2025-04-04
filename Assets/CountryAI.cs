@@ -45,11 +45,15 @@ public class CountryAI : MonoBehaviour
     public GameObject HousePrefab;
     public GameObject FactoryPrefab;
     public CountryList country_list;
+    public GridManagerScript GridSystem;
     public int StartNumber = 10;
 
     private void Start()
     {
         GameObject Clist = GameObject.FindWithTag("list");
+        GameObject gridManager = GameObject.FindWithTag("Grid");
+        GridSystem = gridManager.GetComponent<GridManagerScript>();
+
         country_list = Clist.GetComponent<CountryList>();
 
         if (!TownHall) TownHall = Build(1000, TownHallPrefab);
@@ -218,10 +222,18 @@ public class CountryAI : MonoBehaviour
 
     Vector3 RandPos(float xRange, float zRange)
     {
-        float x = transform.position.x + UnityEngine.Random.Range(xRange, -xRange);
-        float z = transform.position.z + UnityEngine.Random.Range(zRange, -zRange);
+        int RandomIndex = UnityEngine.Random.Range(0, GridSystem.Grids.Count);
+        GameObject RandomGrid = GridSystem.Grids[RandomIndex];
+        TileScript RandomTile = RandomGrid.GetComponent<TileScript>();
 
+        if (!RandomTile.isBuildable || Vector3.Distance(transform.position, RandomGrid.transform.position) > 400) 
+            return RandPos(xRange, zRange);
+
+        float x = RandomGrid.transform.position.x;
+        float z = RandomGrid.transform.position.z;
         Vector3 pos = new Vector3(x, 0, z);
+
+        RandomTile.isBuildable = false;
 
         return pos;
     }
